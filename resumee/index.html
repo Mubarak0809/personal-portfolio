@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #fff;
+            line-height: 1.6;
+            perspective: 1000px;
+            background: linear-gradient(to bottom, #1e3c72, #2a5298);
+        }
+
+        header {
+            background: rgba(0, 0, 0, 0.85);
+            color: #f4e04d;
+            padding: 20px 10%;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.8rem;
+        }
+
+        header p {
+            margin: 10px 0 0;
+            font-size: 1.2rem;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(30, 60, 114, 0.9);
+            padding: 10px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .menu-toggle div {
+            width: 25px;
+            height: 3px;
+            background: white;
+            margin: 5px 0;
+        }
+
+        nav a {
+            color: #f4e04d;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 0 10px;
+            position: relative;
+            transition: color 0.3s ease, transform 0.3s ease;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+
+        nav a:hover {
+            color: #fff;
+            background: rgba(244, 224, 77, 0.6);
+            box-shadow: 0 0 10px rgba(244, 224, 77, 1), 0 0 20px rgba(244, 224, 77, 0.8);
+            transform: scale(1.1);
+        }
+
+        .nav-links {
+            display: flex;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                background: rgba(30, 60, 114, 0.95);
+                position: absolute;
+                top: 50px;
+                left: 0;
+                width: 100%;
+                padding: 10px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            transform-style: preserve-3d;
+        }
+
+        .section {
+            margin: 40px 0;
+            transform-origin: center;
+            transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out;
+            opacity: 0;
+            transform: scale(0.8) rotateX(-10deg);
+        }
+
+        .section.visible {
+            transform: scale(1) rotateX(0deg);
+            opacity: 1;
+        }
+
+        .section h2 {
+            margin-bottom: 20px;
+            font-size: 2.2rem;
+            color: #f4e04d;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        .section p {
+            font-size: 1.1rem;
+        }
+
+        .about img {
+            width: 500px;
+            height: auto;
+            border-radius: 10%;
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.7);
+            transition: transform 0.3s ease;
+        }
+
+        .about img:hover {
+            transform: scale(1.05);
+        }
+
+        .skills ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .skills ul li {
+            background: rgba(255, 255, 255, 0.2);
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+
+        .skills ul li:hover {
+            background: rgba(244, 224, 77, 0.6);
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background: #2a5298;
+            color: #f4e04d;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        button {
+            background: linear-gradient(to right, #ff758c, #ff7eb3);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3), 0 0 8px #ff7eb3;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        button:hover {
+            background: linear-gradient(to right, #ff7eb3, #ff758c);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3), 0 0 16px #ff758c;
+        }
+
+        a {
+            color: #f4e04d;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #e94560;
+        }
+    </style>
+    <script>
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+        }
+
+        function revealSections() {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    section.classList.add('visible');
+                } else {
+                    section.classList.remove('visible');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', revealSections);
+        window.addEventListener('load', revealSections);
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Mohamed Mubarak S A J</h1>
+    </header>
+
+    <nav>
+        <div class="menu-toggle" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#education">Education</a>
+            <a href="#skills">Skills</a>
+            <a href="#experience">Experience</a>
+        </div>
+    </nav>
+
+    <div class="container" id="home">
+        <!-- About Me Section -->
+        <div class="section about" id="about">
+            <img src="myimage.jpeg" alt="Professional photo of me">
+            <div>
+                <h2>About Me</h2>
+                <p>Hello! I'm a passionate web developer with a strong foundation in front-end technologies. I love creating elegant, user-friendly websites and applications. With a background in computer science, I've worked on various projects that demonstrate my ability to solve problems and build efficient solutions.</p>
+            </div>
+        </div>
+
+        <!-- Education Section -->
+        <div class="section education" id="education">
+            <h2>Education</h2>
+            <div class="year"><i class='bx bxs-calendar'></i>2021 - 2025</div>
+            <h3>IFET COLLEGE OF ENGINEERING </h3>
+            <p>B.E(COMPUTER SCIENCE AND ENGINEERING) With well CGPA Upto 6th Semester</p>
+        </div> 
+       
+
+        <!-- Skills Section -->
+        <div class="section skills" id="skills">
+            <h2>Skills</h2>
+            <ul>
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>JavaScript</li>
+                <li>C Programming</li>
+                <li>UI/UX design</li>
+            </ul>
+        </div>
+
+               <!-- Experience Section -->
+               <div class="section experience" id="experience">
+                <h2>Experience</h2>
+                <div class="education-content">
+                    <div class="content">
+                        <div class="year"><i class='bx bxs-calendar'></i><h2>2024</h2></div>
+                        <h3>Front-end web development-NaNlogical Consultancy Services pvt ltd </h3>
+                        <p>I complete the one month course of Web App development in NaNlogical Consultancy Services pvt.ltd.</p>
+                    </div>
+                  </div>
+                  <div class="education-content">
+                    <div class="content">
+                        <div class="year"><i class='bx bxs-calendar'></i><h2>2024</h2></div>
+                        <h3>UI and UX Design-Tech India IT solutions pvt ltd</h3>
+                        <p>I work as intern of couple of months in "Tech India IT Solutions" as a UI and UX Designer.</p>
+                    </div>
+                  </div>
+                  <div class="education-content">
+                    <div class="content">
+                        <div class="year"><i class='bx bxs-calendar'></i><h2>2022</h2></div>
+                        <h3>Inplant Training</h3>
+                        <p>I have one week of experience in web development at Cloudlogic Technologies.</p>
+                    </div>
+                  </div>
+            </div>
+        </div>
+    
+        <footer>
+            <p>&copy; 2024 Mubarak Portfolio. All rights reserved.</p>
+        </footer>
+    
+    </body>
+    </html>
+    
